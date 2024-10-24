@@ -4,11 +4,21 @@ let sliderVolume;
 let buttonVolume;
 
 function coneFillHeightToVolume(fillHeightPercentage) {
-  return Math.pow(fillHeightPercentage / 100, 3) * 100;
+  return (
+    (1 / 3) *
+    Math.PI *
+    Math.pow(fillHeightPercentage / 100, 2) *
+    fillHeightPercentage
+  );
 }
 
 function coneVolumeToFillHeight(volumePercentage) {
-  return Math.cbrt(volumePercentage / 100) * 100;
+  return (
+    Math.cbrt(
+      volumePercentage /
+        ((1 / 3) * Math.PI * Math.pow(volumePercentage / 100, 2))
+    ) * 100
+  );
 }
 
 function resetHeight() {
@@ -59,11 +69,10 @@ function draw() {
   fill("rgba(255, 255, 255, 0.5)");
   cone(200, 200, 16, 4, false);
   //2
-  translate(0, 100-sliderVolume.value(), 0);
-  //translate(0, 0 - sliderVolume.value(), 0);
+  translate(0, 100 - sliderVolume.value(), 0);
+  translate(0, -100+sliderVolume.value()*2, 0);
   fill("red");
-  cone(sliderVolume.value() * 2, sliderVolume.value() * 2, 16, 4, true);
-
+  cone(200 -sliderVolume.value() * 2, 200 -sliderVolume.value() * 2, 16, 4, true);
 
   buttonHeight.html(sliderHeight.value());
   buttonVolume.html(sliderVolume.value());
@@ -74,5 +83,5 @@ function updateHeight() {
 }
 
 function updateVolume() {
-  sliderHeight.value(coneVolumeToFillHeight(sliderVolume.value()));
+  //sliderHeight.value(coneVolumeToFillHeight(sliderVolume.value()));
 }
